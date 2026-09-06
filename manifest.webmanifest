@@ -1,0 +1,15 @@
+{
+  "name": "QualityTime",
+  "short_name": "QualityTime",
+  "description": "Estrae in modo casuale una domanda dall'archivio a ogni pressione del pulsante.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f1e7",
+  "theme_color": "#b85c3c",
+  "lang": "it",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

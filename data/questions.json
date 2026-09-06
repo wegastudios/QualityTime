@@ -1,0 +1,117 @@
+{
+  "titolo": "QualityTime",
+  "descrizione": "Archivio di domande diviso in sezioni. Per ogni sezione: 'id' (non cambiarlo), 'nome' mostrato all'utente, 'icona' (una tra: ricordi, emozioni, sogni, gratitudine, relazioni, quotidiano) e l'elenco 'domande'. Aggiungi o togli liberamente le frasi mantenendo virgolette e virgole.",
+  "sezioni": [
+    {
+      "id": "ricordi",
+      "nome": "Ricordi",
+      "icona": "ricordi",
+      "domande": [
+        "Se potessi rivivere un giorno della tua vita, quale sceglieresti?",
+        "Qual è la cosa più coraggiosa che hai fatto?",
+        "Cosa ti manca dell'infanzia?",
+        "Qual è il ricordo più divertente che abbiamo insieme?",
+        "Qual è la lezione più importante che ti ha insegnato un tuo genitore?",
+        "Qual è un posto in cui vorresti tornare?",
+        "Qual è la canzone che ti ricorda un periodo preciso della tua vita?",
+        "Qual è un errore da cui hai imparato molto?",
+        "Com'era una giornata tipica quando avevi vent'anni?",
+        "Qual è stato il viaggio che ricordi con più affetto?"
+      ]
+    },
+    {
+      "id": "emozioni",
+      "nome": "Emozioni",
+      "icona": "emozioni",
+      "domande": [
+        "C'è qualcosa che ti ha fatto arrabbiare di recente?",
+        "Cosa ti fa sentire davvero apprezzato?",
+        "Qual è stata la tua più grande delusione?",
+        "Cosa ti fa sentire al sicuro?",
+        "Cosa ti sei perdonato di recente?",
+        "Se dovessi descrivere questo periodo della tua vita con una parola, quale sarebbe?",
+        "Quando ti sei sentito davvero in pace di recente?",
+        "C'è una preoccupazione che ti accompagna in questi giorni?"
+      ]
+    },
+    {
+      "id": "sogni",
+      "nome": "Sogni e futuro",
+      "icona": "sogni",
+      "domande": [
+        "Qual è un sogno che non hai mai raccontato a nessuno?",
+        "Cosa ti spaventa di più del futuro?",
+        "C'è qualcosa che vorresti imparare quest'anno?",
+        "Come ti immagini fra dieci anni?",
+        "In cosa pensi di essere migliorato negli ultimi anni?",
+        "Cosa faresti se sapessi di non poter fallire?",
+        "C'è un progetto piccolo che ti piacerebbe portare a termine?",
+        "Se domani avessi una giornata tutta per te, come la passeresti?"
+      ]
+    },
+    {
+      "id": "gratitudine",
+      "nome": "Gratitudine",
+      "icona": "gratitudine",
+      "domande": [
+        "Qual è il complimento più bello che tu abbia mai ricevuto?",
+        "Di cosa sei più grato in questo momento?",
+        "Qual è la cosa più generosa che qualcuno ha fatto per te?",
+        "Chi ti ha aiutato quando ne avevi più bisogno?",
+        "Per quale piccola cosa di oggi puoi dire grazie?",
+        "C'è un gesto gentile che ricordi ancora dopo tanti anni?"
+      ]
+    },
+    {
+      "id": "relazioni",
+      "nome": "Relazioni",
+      "icona": "relazioni",
+      "domande": [
+        "Quando ti sei sentito orgoglioso di me?",
+        "C'è qualcosa che non mi hai mai detto e che vorresti dirmi?",
+        "C'è una persona a cui dovresti chiedere scusa?",
+        "Come capisci di poterti fidare di qualcuno?",
+        "Cosa vorresti che le persone ricordassero di te?",
+        "C'è qualcosa che ti piacerebbe fare insieme e non abbiamo mai fatto?",
+        "Qual è una domanda che hai paura di farmi?",
+        "Chi vorresti rivedere che non senti da tanto tempo?"
+      ]
+    },
+    {
+      "id": "quotidiano",
+      "nome": "Vita quotidiana",
+      "icona": "quotidiano",
+      "domande": [
+        "Qual è stato il momento più bello della tua settimana?",
+        "C'è qualcosa che vorresti cambiare nella nostra routine?",
+        "Qual è una piccola cosa che ti rende felice ogni giorno?",
+        "Cosa significa per te la parola casa?",
+        "Cosa ti dà energia quando sei stanco?",
+        "Qual è una tua abitudine che vorresti eliminare?",
+        "Qual è stato il tuo primo pensiero stamattina?",
+        "C'è qualcosa che stai rimandando da troppo tempo?",
+        "Qual è un libro, un film o una serie che ti ha cambiato qualcosa dentro?",
+        "Qual è il tuo modo preferito per passare una domenica?",
+        "Qual è il piatto che ti riporta subito a casa?",
+        "Cosa non deve mai mancare in una buona giornata?"
+      ]
+    },
+    {
+      "id": "famiglia",
+      "nome": "Famiglia",
+      "icona": "famiglia",
+      "domande": [
+        "Chi è la persona della famiglia a cui hai voluto più bene da bambino?",
+        "C'è una tradizione di famiglia che ti dispiacerebbe veder perdere?",
+        "Qual è la storia di famiglia che ti piace raccontare più spesso?",
+        "A chi della famiglia senti di assomigliare di più nel carattere?",
+        "Qual è la festa o il pranzo in famiglia che ricordi con più piacere?",
+        "Che rapporto c'è tra i tuoi figli e quanto sono diversi tra loro?",
+        "Cosa ti ha insegnato la tua famiglia sul modo di trattare gli altri?",
+        "C'è un parente che avresti voluto conoscere meglio?",
+        "Qual è il consiglio di un nonno o di una nonna che porti ancora con te?",
+        "Cosa speri che i più giovani della famiglia ricordino di te?"
+      ]
+    }
+  ]
+}

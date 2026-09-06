@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="QualityTime">
+  <rect width="512" height="512" rx="116" fill="#b85c3c"/>
+  <!-- bolla sul retro: verde salvia -->
+  <path d="M296 150h74a46 46 0 0 1 46 46v64a46 46 0 0 1-46 46h-6v40l-46-40h-22a46 46 0 0 1-46-46v-64a46 46 0 0 1 46-46Z" fill="#4e7a6c"/>
+  <!-- bolla davanti: avorio -->
+  <path d="M142 186h132a50 50 0 0 1 50 50v74a50 50 0 0 1-50 50h-74l-58 44v-44h-2a50 50 0 0 1-50-50v-74a50 50 0 0 1 50-50Z" fill="#f6f1e7"/>
+  <circle cx="188" cy="273" r="13" fill="#b85c3c"/>
+  <circle cx="234" cy="273" r="13" fill="#b85c3c"/>
+  <circle cx="280" cy="273" r="13" fill="#b85c3c"/>
+</svg>
