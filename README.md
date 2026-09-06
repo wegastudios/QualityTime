@@ -57,11 +57,11 @@ nel browser.
   Tinte pensate per un ambiente domestico: calde, riposanti, con buon contrasto e
   caratteri grandi per una lettura comoda.
 - **Icone delle categorie** (una per sezione): cornice foto = Ricordi e Radici,
-  stella = Passioni ed Esperienze, bussola = Valori e Visioni, tavolozza = Gusto e
+  stella = Passioni ed Esperienze, medaglia = Valori e Visioni, tavolozza = Gusto e
   Creatività, lampadina = Curiosità e Immaginazione, cuore = L'Amore e i Sentimenti,
-  valigetta = Il Lavoro e le Realizzazioni, montagna con bandierina = La Vita e il
-  Percorso Personale, gruppo di persone (4·2·1) = Famiglia. Sono definite una volta
-  sola nello "sprite" SVG in cima a `index.html` e riusate nella domanda, nei
+  valigetta = Il Lavoro e le Realizzazioni, persona con zaino e bastone da trekking =
+  La Vita e il Percorso Personale, gruppo di persone (4·2·1) = Famiglia. Sono definite
+  una volta sola nello "sprite" SVG in cima a `index.html` e riusate nella domanda, nei
   pulsanti-sezione e nella cronologia.
 
 ## Modificare le domande

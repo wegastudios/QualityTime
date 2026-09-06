@@ -1,4 +1,4 @@
-const CACHE = "qualitytime-v8";
+const CACHE = "qualitytime-v9";
 const ASSETS = [
   ".",
   "index.html",
