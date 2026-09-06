@@ -4,7 +4,8 @@
   const USERS_KEY = "qt.users";
   const HISTORY_PREFIX = "qt.history.";
   const HISTORY_MAX = 50;
-  const KNOWN_ICONS = ["ricordi", "emozioni", "sogni", "gratitudine", "relazioni", "quotidiano", "famiglia"];
+  const KNOWN_ICONS = ["ricordi", "sogni", "valori", "creativita", "curiosita", "emozioni", "lavoro", "percorso", "famiglia"];
+  const FALLBACK_ICON = "ricordi";
 
   const els = {
     homeView: document.getElementById("homeView"),
@@ -98,13 +99,13 @@
       if (!Array.isArray(raw)) {
         // Compatibilità: vecchio formato con elenco piatto "domande"
         const flat = Array.isArray(data) ? data : data.domande || [];
-        raw = [{ id: "generale", nome: "Domande", icona: "quotidiano", domande: flat }];
+        raw = [{ id: "generale", nome: "Domande", icona: FALLBACK_ICON, domande: flat }];
       }
       sections = raw
         .map((s, i) => ({
           id: String(s.id || "sez" + i),
           nome: String(s.nome || s.id || "Sezione " + (i + 1)),
-          icona: KNOWN_ICONS.includes(s.icona) ? s.icona : "quotidiano",
+          icona: KNOWN_ICONS.includes(s.icona) ? s.icona : FALLBACK_ICON,
           domande: (s.domande || []).map((q) => String(q).trim()).filter(Boolean),
         }))
         .filter((s) => s.domande.length > 0);

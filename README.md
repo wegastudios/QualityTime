@@ -37,7 +37,8 @@ nel browser.
 | `index.html` | Pagina unica: schermata iniziale + schermata gioco |
 | `css/style.css` | Aspetto grafico, tema chiaro/scuro automatico, testi e pulsanti grandi |
 | `js/app.js` | Logica: persone, cronologie, estrazione casuale, salvataggio |
-| `data/questions.json` | **L'archivio delle domande** — l'unico file da modificare per i contenuti |
+| `data/questions.json` | **L'archivio che usa l'app** (sezioni + domande + icone) |
+| `domande.csv` | Sorgente delle 8 sezioni non-Famiglia (`Sezione;Numero;Domanda`). Da qui è stato costruito `questions.json` |
 | `manifest.webmanifest` | Dati per l'installazione come app |
 | `service-worker.js` | Funzionamento offline |
 | `icons/icon.svg` | Logo dell'app |
@@ -55,19 +56,25 @@ nel browser.
   - Rosso mattone `#b23b3b` — solo per il cestino / azioni che eliminano
   Tinte pensate per un ambiente domestico: calde, riposanti, con buon contrasto e
   caratteri grandi per una lettura comoda.
-- **Icone delle categorie**: sette piccole icone a tratto (cornice foto = Ricordi,
-  cuore = Emozioni, stella = Sogni e futuro, pacco regalo = Gratitudine, due persone =
-  Relazioni, tazza fumante = Vita quotidiana, gruppo di persone 4·2·1 = Famiglia).
-  Sono definite una volta sola nello "sprite" SVG in cima a `index.html` e riusate
-  nella domanda, nei pulsanti-sezione e nella cronologia.
+- **Icone delle categorie** (una per sezione): cornice foto = Ricordi e Radici,
+  stella = Passioni ed Esperienze, bussola = Valori e Visioni, tavolozza = Gusto e
+  Creatività, lampadina = Curiosità e Immaginazione, cuore = L'Amore e i Sentimenti,
+  valigetta = Il Lavoro e le Realizzazioni, montagna con bandierina = La Vita e il
+  Percorso Personale, gruppo di persone (4·2·1) = Famiglia. Sono definite una volta
+  sola nello "sprite" SVG in cima a `index.html` e riusate nella domanda, nei
+  pulsanti-sezione e nella cronologia.
 
 ## Modificare le domande
 
-Apri `data/questions.json`. L'archivio è diviso in `"sezioni"`; ogni sezione ha:
+Le 8 sezioni non-Famiglia vengono da `domande.csv`. `data/questions.json` è il file che
+l'app legge davvero: se cambi il CSV, va rigenerato il JSON di conseguenza (stessa
+struttura). La sezione `famiglia` vive solo dentro `questions.json`.
+
+Struttura di ogni sezione in `data/questions.json`:
 
 - `id` – codice interno, **non cambiarlo** (è quello che viene salvato nei profili);
 - `nome` – il nome mostrato all'utente;
-- `icona` – una tra: `ricordi`, `emozioni`, `sogni`, `gratitudine`, `relazioni`, `quotidiano`, `famiglia`;
+- `icona` – una tra: `ricordi`, `sogni`, `valori`, `creativita`, `curiosita`, `emozioni`, `lavoro`, `percorso`, `famiglia`;
 - `domande` – l'elenco delle frasi.
 
 ```json
