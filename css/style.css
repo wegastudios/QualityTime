@@ -343,10 +343,51 @@ body {
   padding: 16px 22px max(20px, env(safe-area-inset-bottom));
 }
 
-/* ---------- Filtro sezioni (sempre visibile, sotto il pulsante) ---------- */
+/* ---------- Filtro sezioni (comprimibile, sotto il pulsante) ---------- */
 .filters {
   max-width: 480px;
-  margin: 14px auto 0;
+  margin: 12px auto 0;
+}
+
+.filters-toggle {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ft-sign {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.ft-count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.filters-body {
+  margin-top: 10px;
 }
 
 .filters-head {

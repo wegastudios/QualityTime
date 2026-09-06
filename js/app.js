@@ -3,6 +3,7 @@
 
   const USERS_KEY = "qt.users";
   const HISTORY_PREFIX = "qt.history.";
+  const FILTERS_OPEN_KEY = "qt.filtersOpen";
   const HISTORY_MAX = 50;
   const KNOWN_ICONS = ["ricordi", "sogni", "valori", "creativita", "curiosita", "emozioni", "lavoro", "percorso", "famiglia"];
   const FALLBACK_ICON = "ricordi";
@@ -37,6 +38,9 @@
     counter: document.getElementById("counter"),
     drawBtn: document.getElementById("drawBtn"),
     filters: document.getElementById("filters"),
+    filtersToggle: document.getElementById("filtersToggle"),
+    filtersBody: document.getElementById("filtersBody"),
+    filtersCount: document.getElementById("filtersCount"),
     sectionChips: document.getElementById("sectionChips"),
     allSectionsBtn: document.getElementById("allSectionsBtn"),
     sectionsWarn: document.getElementById("sectionsWarn"),
@@ -367,6 +371,18 @@
       els.counter.textContent =
         "Estratte: " + history.length + " · In gioco: " + n + " domande";
     }
+    els.filtersCount.textContent = activeSections.size + "/" + sections.length;
+    const allOn = sections.length > 0 && activeSections.size === sections.length;
+    els.allSectionsBtn.textContent = allOn ? "Nessuna" : "Tutte";
+  }
+
+  function setFiltersOpen(open) {
+    els.filtersBody.hidden = !open;
+    els.filtersToggle.setAttribute("aria-expanded", String(open));
+    els.filtersToggle.querySelector(".ft-sign").textContent = open ? "−" : "+";
+    try {
+      localStorage.setItem(FILTERS_OPEN_KEY, open ? "1" : "0");
+    } catch (_) {}
   }
 
   function showText(text) {
@@ -439,8 +455,9 @@
     updatePoolState();
   }
 
-  function selectAllSections() {
-    activeSections = new Set(defaultSectionIds());
+  function toggleAllSections() {
+    const allOn = activeSections.size === sections.length;
+    activeSections = allOn ? new Set() : new Set(defaultSectionIds());
     if (currentUser) {
       currentUser.sections = [...activeSections];
       persistCurrentUser();
@@ -495,7 +512,8 @@
   });
   els.backBtn.addEventListener("click", exitSession);
   els.drawBtn.addEventListener("click", draw);
-  els.allSectionsBtn.addEventListener("click", selectAllSections);
+  els.allSectionsBtn.addEventListener("click", toggleAllSections);
+  els.filtersToggle.addEventListener("click", () => setFiltersOpen(els.filtersBody.hidden));
   els.historyBtn.addEventListener("click", openHistory);
   els.closeHistoryBtn.addEventListener("click", closePanels);
   els.scrim.addEventListener("click", closePanels);
@@ -505,6 +523,12 @@
   });
 
   /* ---------- Avvio ---------- */
+  let filtersOpen = false;
+  try {
+    filtersOpen = localStorage.getItem(FILTERS_OPEN_KEY) === "1";
+  } catch (_) {}
+  setFiltersOpen(filtersOpen);
+
   renderUsers();
   loadQuestions().then(() => {
     if (!els.gameView.hidden && currentUser) {
