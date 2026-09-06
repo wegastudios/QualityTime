@@ -36,9 +36,8 @@ nel browser.
 |------|--------------|
 | `index.html` | Pagina unica: schermata iniziale + schermata gioco |
 | `css/style.css` | Aspetto grafico, tema chiaro/scuro automatico, testi e pulsanti grandi |
-| `js/app.js` | Logica: persone, cronologie, estrazione casuale, salvataggio |
-| `data/questions.json` | **L'archivio che usa l'app** (sezioni + domande + icone) |
-| `domande.csv` | Sorgente delle 8 sezioni non-Famiglia (`Sezione;Numero;Domanda`). Da qui è stato costruito `questions.json` |
+| `js/app.js` | Logica: persone, cronologie, estrazione casuale, salvataggio, lettura del CSV |
+| `domande.csv` | **L'archivio che usa l'app**: una riga per domanda, `Sezione;Numero;Domanda` |
 | `manifest.webmanifest` | Dati per l'installazione come app |
 | `service-worker.js` | Funzionamento offline |
 | `icons/icon.svg` | Logo dell'app |
@@ -66,37 +65,29 @@ nel browser.
 
 ## Modificare le domande
 
-Le 8 sezioni non-Famiglia vengono da `domande.csv`. `data/questions.json` è il file che
-l'app legge davvero: se cambi il CSV, va rigenerato il JSON di conseguenza (stessa
-struttura). La sezione `famiglia` vive solo dentro `questions.json`.
+Si lavora **solo su `domande.csv`**. Ogni riga è una domanda, tre colonne separate da
+punto e virgola: `Sezione;Numero;Domanda`. La prima riga è l'intestazione. Il campo
+`Numero` è solo indicativo, l'app non lo usa.
 
-Struttura di ogni sezione in `data/questions.json`:
-
-- `id` – codice interno, **non cambiarlo** (è quello che viene salvato nei profili);
-- `nome` – il nome mostrato all'utente;
-- `icona` – una tra: `ricordi`, `sogni`, `valori`, `creativita`, `curiosita`, `emozioni`, `lavoro`, `percorso`, `famiglia`;
-- `domande` – l'elenco delle frasi.
-
-```json
-{
-  "sezioni": [
-    {
-      "id": "ricordi",
-      "nome": "Ricordi",
-      "icona": "ricordi",
-      "domande": [
-        "Prima domanda?",
-        "Ultima domanda?"
-      ]
-    }
-  ]
-}
+```
+"Sezione";"Numero";"Domanda"
+"Ricordi e Radici";1;"Prima domanda?"
+"Ricordi e Radici";2;"Seconda domanda?"
+"Famiglia";43;"Un'altra domanda?"
 ```
 
-Per aggiungere una **nuova sezione** basta un nuovo blocco con un `id` nuovo; comparirà
-da sola tra le caselle. Per aggiungere una nuova icona serve invece disegnarne una in
-`index.html` (blocco `<svg class="sprite">`) e aggiungere il nome all'elenco in
-`js/app.js` (`KNOWN_ICONS`).
+- Per **aggiungere/togliere domande**: aggiungi o cancella righe.
+- Per una **sezione nuova**: usa un nome di `Sezione` nuovo; comparirà da sola tra i
+  pulsanti-filtro. L'icona si assegna in `js/app.js`, nella mappa `SECTION_ICONS`
+  (nome sezione → nome icona). In alternativa si può aggiungere una 4ª colonna `Icona`
+  nel CSV con il nome dell'icona su ogni riga della sezione.
+- Icone disponibili: `ricordi`, `sogni`, `valori`, `creativita`, `curiosita`,
+  `emozioni`, `lavoro`, `percorso`, `famiglia`. Una nuova va disegnata nello "sprite"
+  SVG in cima a `index.html` e aggiunta a `KNOWN_ICONS` in `js/app.js`.
+
+**Salvare da Excel:** usa *File → Salva con nome → CSV UTF-8 (delimitato da separatore
+di elenco)*. L'app riconosce sia `;` che `,` come separatore e prova sia UTF-8 sia la
+codifica ANSI di Windows, ma il formato "CSV UTF-8" è quello più sicuro per gli accenti.
 
 Con l'app già installata, riaprendola online l'archivio si aggiorna da solo.
 

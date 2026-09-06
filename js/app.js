@@ -7,6 +7,20 @@
   const KNOWN_ICONS = ["ricordi", "sogni", "valori", "creativita", "curiosita", "emozioni", "lavoro", "percorso", "famiglia"];
   const FALLBACK_ICON = "ricordi";
 
+  // Icona per ogni sezione di domande.csv (per nome esatto della sezione).
+  // Aggiungi qui una riga se aggiungi una sezione nuova nel CSV.
+  const SECTION_ICONS = {
+    "Ricordi e Radici": "ricordi",
+    "Passioni ed Esperienze": "sogni",
+    "Valori e Visioni": "valori",
+    "Gusto e Creatività": "creativita",
+    "Curiosità e Immaginazione": "curiosita",
+    "L'Amore e i Sentimenti": "emozioni",
+    "Il Lavoro e le Realizzazioni": "lavoro",
+    "La Vita e il Percorso Personale": "percorso",
+    "Famiglia": "famiglia",
+  };
+
   const els = {
     homeView: document.getElementById("homeView"),
     gameView: document.getElementById("gameView"),
@@ -89,29 +103,90 @@
     return "u" + Date.now() + Math.random().toString(16).slice(2);
   }
 
-  /* ---------- Domande e sezioni ---------- */
-  async function loadQuestions() {
-    try {
-      const res = await fetch("data/questions.json", { cache: "no-cache" });
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const data = await res.json();
-      let raw = data.sezioni;
-      if (!Array.isArray(raw)) {
-        // Compatibilità: vecchio formato con elenco piatto "domande"
-        const flat = Array.isArray(data) ? data : data.domande || [];
-        raw = [{ id: "generale", nome: "Domande", icona: FALLBACK_ICON, domande: flat }];
+  /* ---------- Domande e sezioni (da domande.csv) ---------- */
+  function slug(str) {
+    const accents = { à: "a", á: "a", è: "e", é: "e", ì: "i", í: "i", î: "i", ò: "o", ó: "o", ù: "u", ú: "u", ç: "c" };
+    return String(str)
+      .toLowerCase()
+      .replace(/[àáèéìíîòóùúç]/g, (c) => accents[c] || c)
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "sezione";
+  }
+
+  // Decodifica un file di testo provando prima UTF-8 e poi Windows-1252
+  // (Excel in italiano spesso salva i CSV in ANSI/Windows-1252).
+  function decodeText(buffer) {
+    let text = new TextDecoder("utf-8").decode(buffer);
+    if (text.includes("�")) {
+      try {
+        text = new TextDecoder("windows-1252").decode(buffer);
+      } catch (_) {}
+    }
+    return text.replace(/^﻿/, "");
+  }
+
+  // Parser CSV minimale: gestisce virgolette " e campi con il delimitatore dentro.
+  function parseCSV(text, delimiter) {
+    const rows = [];
+    let row = [];
+    let field = "";
+    let inQuotes = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (inQuotes) {
+        if (c === '"') {
+          if (text[i + 1] === '"') { field += '"'; i++; }
+          else inQuotes = false;
+        } else field += c;
+      } else if (c === '"') {
+        inQuotes = true;
+      } else if (c === delimiter) {
+        row.push(field); field = "";
+      } else if (c === "\n" || c === "\r") {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(field); field = "";
+        if (row.some((v) => v !== "")) rows.push(row);
+        row = [];
+      } else {
+        field += c;
       }
-      sections = raw
-        .map((s, i) => ({
-          id: String(s.id || "sez" + i),
-          nome: String(s.nome || s.id || "Sezione " + (i + 1)),
-          icona: KNOWN_ICONS.includes(s.icona) ? s.icona : FALLBACK_ICON,
-          domande: (s.domande || []).map((q) => String(q).trim()).filter(Boolean),
-        }))
-        .filter((s) => s.domande.length > 0);
+    }
+    if (field !== "" || row.length) {
+      row.push(field);
+      if (row.some((v) => v !== "")) rows.push(row);
+    }
+    return rows;
+  }
+
+  async function loadQuestions() {
+    sections = [];
+    try {
+      const res = await fetch("domande.csv", { cache: "no-cache" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const text = decodeText(await res.arrayBuffer());
+      const firstLine = text.split(/\r?\n/, 1)[0] || "";
+      const delimiter = (firstLine.split(";").length > firstLine.split(",").length) ? ";" : ",";
+      const rows = parseCSV(text, delimiter);
+      if (rows.length) rows.shift(); // via l'intestazione
+
+      const byName = new Map(); // nome sezione -> {id, nome, icona, domande[]}
+      for (const cols of rows) {
+        const nome = (cols[0] || "").trim();
+        const domanda = (cols[2] || "").trim();
+        const iconaCsv = (cols[3] || "").trim();
+        if (!nome || !domanda) continue;
+        if (!byName.has(nome)) {
+          const icona = KNOWN_ICONS.includes(iconaCsv)
+            ? iconaCsv
+            : (SECTION_ICONS[nome] || FALLBACK_ICON);
+          byName.set(nome, { id: slug(nome), nome, icona, domande: [] });
+        }
+        byName.get(nome).domande.push(domanda);
+      }
+      sections = [...byName.values()].filter((s) => s.domande.length > 0);
     } catch (err) {
       sections = [];
-      console.error("Impossibile caricare l'archivio delle domande:", err);
+      console.error("Impossibile caricare domande.csv:", err);
     }
 
     sectionById = {};

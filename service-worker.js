@@ -1,10 +1,10 @@
-const CACHE = "qualitytime-v9";
+const CACHE = "qualitytime-v10";
 const ASSETS = [
   ".",
   "index.html",
   "css/style.css",
   "js/app.js",
-  "data/questions.json",
+  "domande.csv",
   "manifest.webmanifest",
   "icons/icon.svg"
 ];
@@ -28,7 +28,7 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
 
   // Network-first per l'archivio, così le modifiche alle domande arrivano subito.
-  if (request.url.includes("data/questions.json")) {
+  if (request.url.includes("domande.csv")) {
     event.respondWith(
       fetch(request)
         .then((res) => {
